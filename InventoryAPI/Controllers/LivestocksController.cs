@@ -12,55 +12,55 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SuppliesController : ControllerBase
+    public class LivestocksController : ControllerBase
     {
         private readonly InventoryDBContext _context;
 
-        public SuppliesController(InventoryDBContext context)
+        public LivestocksController(InventoryDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Supplies
+        // GET: api/Livestocks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Supplies>>> GetSupplies()
+        public async Task<ActionResult<IEnumerable<Livestock>>> GetLivestock()
         {
-          if (_context.Supplies == null)
+          if (_context.Livestock == null)
           {
               return NotFound();
           }
-            return await _context.Supplies.ToListAsync();
+            return await _context.Livestock.ToListAsync();
         }
 
-        // GET: api/Supplies/5
+        // GET: api/Livestocks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Supplies>> GetSupplies(Guid id)
+        public async Task<ActionResult<Livestock>> GetLivestock(Guid id)
         {
-          if (_context.Supplies == null)
+          if (_context.Livestock == null)
           {
               return NotFound();
           }
-            var supplies = await _context.Supplies.FindAsync(id);
+            var livestock = await _context.Livestock.FindAsync(id);
 
-            if (supplies == null)
+            if (livestock == null)
             {
                 return NotFound();
             }
 
-            return supplies;
+            return livestock;
         }
 
-        // PUT: api/Supplies/5
+        // PUT: api/Livestocks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSupplies(Guid id, Supplies supplies)
+        public async Task<IActionResult> PutLivestock(Guid id, Livestock livestock)
         {
-            if (id != supplies.Id)
+            if (id != livestock.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(supplies).State = EntityState.Modified;
+            _context.Entry(livestock).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SuppliesExists(id))
+                if (!LivestockExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Supplies
+        // POST: api/Livestocks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Supplies>> PostSupplies(Supplies supplies)
+        public async Task<ActionResult<Livestock>> PostLivestock(Livestock livestock)
         {
-          if (_context.Supplies == null)
+          if (_context.Livestock == null)
           {
-              return Problem("Entity set 'InventoryDBContext.Supplies'  is null.");
+              return Problem("Entity set 'InventoryDBContext.Livestock'  is null.");
           }
-            _context.Supplies.Add(supplies);
+            _context.Livestock.Add(livestock);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSupplies", new { id = supplies.Id }, supplies);
+            return CreatedAtAction("GetLivestock", new { id = livestock.Id }, livestock);
         }
 
-        // DELETE: api/Supplies/5
+        // DELETE: api/Livestocks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSupplies(Guid id)
+        public async Task<IActionResult> DeleteLivestock(Guid id)
         {
-            if (_context.Supplies == null)
+            if (_context.Livestock == null)
             {
                 return NotFound();
             }
-            var supplies = await _context.Supplies.FindAsync(id);
-            if (supplies == null)
+            var livestock = await _context.Livestock.FindAsync(id);
+            if (livestock == null)
             {
                 return NotFound();
             }
 
-            _context.Supplies.Remove(supplies);
+            _context.Livestock.Remove(livestock);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SuppliesExists(Guid id)
+        private bool LivestockExists(Guid id)
         {
-            return (_context.Supplies?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Livestock?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

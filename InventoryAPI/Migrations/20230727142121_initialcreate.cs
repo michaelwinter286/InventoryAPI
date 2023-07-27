@@ -12,6 +12,20 @@ namespace InventoryAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Livestock",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AnimalName = table.Column<string>(type: "TEXT", nullable: false),
+                    Breed = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Livestock", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Supplies",
                 columns: table => new
                 {
@@ -30,6 +44,9 @@ namespace InventoryAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Livestock");
+
             migrationBuilder.DropTable(
                 name: "Supplies");
         }
